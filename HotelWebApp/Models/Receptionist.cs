@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace HotelWebApp.Models
 {
-    public class Receptionist
+    public class Receptionist : ApplicationUser
     {
-        [Key]
         public string ReceptionistId { get; set; }
         [Required]
         public string Name { get; set; }    

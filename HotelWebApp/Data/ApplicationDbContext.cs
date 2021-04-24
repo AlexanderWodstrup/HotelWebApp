@@ -15,5 +15,8 @@ namespace HotelWebApp.Data
         }
 
         public DbSet<Receptionist> Receptionists { get; set; }
+        public DbSet<Chef> Chefs { get; set; }
+        public DbSet<Waiter> Waiters { get; set; }
+        public DbSet<Guest> Guests { get; set; }
     }
 }

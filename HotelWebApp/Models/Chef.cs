@@ -8,6 +8,7 @@ namespace HotelWebApp.Models
 {
     public class Chef : ApplicationUser
     {
+        public string ChefId { get; set; }
         [Required]
         public string Name { get; set; }
     }
