@@ -20,19 +20,19 @@ namespace HotelWebApp.Controllers
 
         public IActionResult Index()
         {
-            if (User.HasClaim("LaundryUser", "IsLaundryUser"))
+            if (User.HasClaim("Receptionist", "IsReceptionist"))
             {
-                return RedirectToAction(nameof(Index), "LaundryUser");
+                return RedirectToAction(nameof(Index), "Receptionists");
             }
 
-            if (User.HasClaim("UserAdmin", "IsUserAdmin"))
+            if (User.HasClaim("Waiter", "IsWaiter"))
             {
-                return RedirectToAction(nameof(Index), "UserAdmin");
+                return RedirectToAction(nameof(Index), "Waiters");
             }
 
-            if (User.HasClaim("SystemAdmin", "IsSystemAdmin"))
+            if (User.HasClaim("Chef", "IsChef"))
             {
-                return RedirectToAction(nameof(Index), "SystemAdmin");
+                return RedirectToAction(nameof(Index), "Chefs");
             }
 
             else
@@ -40,17 +40,6 @@ namespace HotelWebApp.Controllers
                 TempData["Security Check"] = "failed";
                 return RedirectToAction(nameof(Index));
             }
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

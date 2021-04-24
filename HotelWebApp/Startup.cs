@@ -34,8 +34,9 @@ namespace HotelWebApp
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            
             services.AddControllersWithViews();
 
             services.AddAuthorization(options =>
@@ -44,23 +45,18 @@ namespace HotelWebApp
                     "IsReceptionist",
                     policyBuilder => policyBuilder
                         .RequireClaim("Receptionist"));
-            });
 
-            services.AddAuthorization(options =>
-            {
                 options.AddPolicy(
                     "IsWaiter",
                     policyBuilder => policyBuilder
                         .RequireClaim("Waiter"));
-            });
 
-            services.AddAuthorization(options =>
-            {
                 options.AddPolicy(
                     "IsChef",
                     policyBuilder => policyBuilder
                         .RequireClaim("Chef"));
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,12 +69,12 @@ namespace HotelWebApp
                 app.UseMigrationsEndPoint();
             }
 
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            //    app.UseHsts();
+            //}
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -86,7 +82,7 @@ namespace HotelWebApp
 
             app.UseAuthentication();
 
-            SeedUsers(userManager, context); //Seeding users
+            //SeedUsers(userManager, context); //Seeding users
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -126,6 +122,9 @@ namespace HotelWebApp
                 {
                     userManager.AddClaimAsync(user, new Claim("Receptionist", "IsReceptionist")).Wait();
                 }
+
+                //_context.Receptionists.Add(user);
+                //_context.SaveChanges();
             }
 
             
