@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using HotelWepApp2.Models;
 
 namespace HotelWepApp2.Data
 {
@@ -12,5 +13,10 @@ namespace HotelWepApp2.Data
             : base(options)
         {
         }
+
+        public DbSet<Job> Jobs { get; set; }
+        public DbSet<Guest> Guests { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+
     }
 }

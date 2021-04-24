@@ -35,10 +35,29 @@ namespace HotelWepApp2
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    "IsReceptionist",
+                    policyBuilder => policyBuilder
+                        .RequireClaim("Receptionist"));
+
+                options.AddPolicy(
+                    "IsWaiter",
+                    policyBuilder => policyBuilder
+                        .RequireClaim("Waiter"));
+
+                options.AddPolicy(
+                    "IsChef",
+                    policyBuilder => policyBuilder
+                        .RequireClaim("Chef"));
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -57,6 +76,7 @@ namespace HotelWepApp2
             app.UseRouting();
 
             app.UseAuthentication();
+            DbHelper.SeedData(context,userManager);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
