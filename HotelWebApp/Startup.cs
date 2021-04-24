@@ -11,7 +11,9 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using HotelWebApp.Models;
 
 namespace HotelWebApp
 {
@@ -27,6 +29,15 @@ namespace HotelWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddControllersWithViews();
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(
@@ -50,25 +61,18 @@ namespace HotelWebApp
                     policyBuilder => policyBuilder
                         .RequireClaim("Chef"));
             });
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
+
             else
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -81,6 +85,8 @@ namespace HotelWebApp
             app.UseRouting();
 
             app.UseAuthentication();
+
+            SeedUsers(userManager, context); //Seeding users
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -90,6 +96,39 @@ namespace HotelWebApp
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+        }
+
+        public static void SeedUsers(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
+        {
+            ApplicationDbContext _context = context;
+            const bool emailConfirmed = true;
+
+            //=================== Creating Receptionist ==========================
+
+            const string receptionistEmail = "receptionist@receptionist.com";
+            const string receptionistPassword = "Sommer25!";
+            const string receptionistCell = "20212223";
+            const string receptionistName = "Peter Fuglsang";
+
+
+            if (!_context.Receptionists.Any(e => e.UserName == receptionistEmail))
+            {
+                var user = new Receptionist();
+                user.UserName = receptionistEmail;
+                user.Name = receptionistName;
+                user.Email = receptionistEmail;
+                user.EmailConfirmed = emailConfirmed;
+                user.PhoneNumber = receptionistCell;
+
+                IdentityResult result = userManager.CreateAsync(user, receptionistPassword).Result;
+
+                if (result.Succeeded) //Add claim to user
+                {
+                    userManager.AddClaimAsync(user, new Claim("Receptionist", "IsReceptionist")).Wait();
+                }
+            }
+
+            
         }
     }
 }
