@@ -20,7 +20,26 @@ namespace HotelWebApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (User.HasClaim("LaundryUser", "IsLaundryUser"))
+            {
+                return RedirectToAction(nameof(Index), "LaundryUser");
+            }
+
+            if (User.HasClaim("UserAdmin", "IsUserAdmin"))
+            {
+                return RedirectToAction(nameof(Index), "UserAdmin");
+            }
+
+            if (User.HasClaim("SystemAdmin", "IsSystemAdmin"))
+            {
+                return RedirectToAction(nameof(Index), "SystemAdmin");
+            }
+
+            else
+            {
+                TempData["Security Check"] = "failed";
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         public IActionResult Privacy()

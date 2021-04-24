@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using HotelWebApp.Models;
 
 namespace HotelWebApp.Data
 {
@@ -12,5 +13,7 @@ namespace HotelWebApp.Data
             : base(options)
         {
         }
+
+        public DbSet<Receptionist> Receptionists { get; set; }
     }
 }
