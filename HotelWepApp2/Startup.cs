@@ -34,6 +34,7 @@ namespace HotelWepApp2
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews();
 
             services.AddAuthorization(options =>
@@ -64,19 +65,21 @@ namespace HotelWepApp2
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            //    app.UseHsts();
+            //}
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthentication();
+            
             DbHelper.SeedData(context,userManager);
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

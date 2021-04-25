@@ -17,6 +17,7 @@ namespace HotelWepApp2.Data
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Guest> Guests { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Buffet> Buffets { get; set; }
 
     }
 }
