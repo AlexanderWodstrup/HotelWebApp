@@ -27,13 +27,19 @@ namespace HotelWepApp2.Controllers
         }
 
         [Authorize("IsReceptionist")]
-        public async Task<IActionResult> ReceptionistView()
+        public async Task<IActionResult> Reservations()
+        {
+            return View(await _context.Jobs.ToListAsync());
+        }
+
+        [Authorize("IsReceptionist")]
+        public async Task<IActionResult> Rooms()
         {
             return View(await _context.Jobs.ToListAsync());
         }
 
         [Authorize("IsWaiter")]
-        public async Task<IActionResult> Reservations()
+        public async Task<IActionResult> ReceptionistView()
         {
             return View(await _context.Jobs.ToListAsync());
         }
