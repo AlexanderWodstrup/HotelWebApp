@@ -13,6 +13,6 @@ namespace HotelWepApp2.Models
         public DateTime Date { get; set; }
         public string GuestType { get; set; }
         public List<Guest> Guest { get; set; }
-
+        //public int GuestCounter { get; set; }
     }
 }
