@@ -4,20 +4,37 @@ using HotelWepApp2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace HotelWepApp2.Data.Migrations
+namespace HotelWepApp2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210426204605_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BuffetGuest", b =>
+                {
+                    b.Property<int>("BuffetId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GuestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BuffetId", "GuestId");
+
+                    b.HasIndex("GuestId");
+
+                    b.ToTable("BuffetGuest");
+                });
 
             modelBuilder.Entity("HotelWepApp2.Models.Buffet", b =>
                 {
@@ -47,9 +64,6 @@ namespace HotelWepApp2.Data.Migrations
                     b.Property<bool>("BuffetCheckIn")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("BuffetId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
@@ -57,8 +71,6 @@ namespace HotelWepApp2.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GuestId");
-
-                    b.HasIndex("BuffetId");
 
                     b.HasIndex("RoomId");
 
@@ -297,12 +309,23 @@ namespace HotelWepApp2.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("HotelWepApp2.Models.Guest", b =>
+            modelBuilder.Entity("BuffetGuest", b =>
                 {
                     b.HasOne("HotelWepApp2.Models.Buffet", null)
-                        .WithMany("Guest")
-                        .HasForeignKey("BuffetId");
+                        .WithMany()
+                        .HasForeignKey("BuffetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
+                    b.HasOne("HotelWepApp2.Models.Guest", null)
+                        .WithMany()
+                        .HasForeignKey("GuestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HotelWepApp2.Models.Guest", b =>
+                {
                     b.HasOne("HotelWepApp2.Models.Room", "Room")
                         .WithMany("Guests")
                         .HasForeignKey("RoomId");
@@ -359,11 +382,6 @@ namespace HotelWepApp2.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("HotelWepApp2.Models.Buffet", b =>
-                {
-                    b.Navigation("Guest");
                 });
 
             modelBuilder.Entity("HotelWepApp2.Models.Room", b =>

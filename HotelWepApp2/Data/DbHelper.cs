@@ -90,17 +90,20 @@ namespace HotelWepApp2.Data
                 var guest = new Guest
                 {
                     Type = "Adult",
-                    Room = room1
+                    Room = room1,
+                    Buffet = new List<Buffet>()
                 };
                 var guest2 = new Guest
                 {
                     Type = "Kid",
-                    Room = room1
+                    Room = room1,
+                    Buffet = new List<Buffet>()
                 };
                 var guest3 = new Guest
                 {
                     Type = "Adult",
-                    Room = room2
+                    Room = room2,
+                    Buffet = new List<Buffet>()
                 };
                 db.Guests.Add(guest);
                 db.Guests.Add(guest2);

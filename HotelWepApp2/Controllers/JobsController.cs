@@ -30,7 +30,7 @@ namespace HotelWepApp2.Controllers
         [Authorize("IsReceptionist")]
         public async Task<IActionResult> Reservations()
         {
-            return View(await _context.Buffets.Where(b => b.BuffetId == 1).Include(b=>b.Guest).ToListAsync());
+            return View(await _context.Buffets.Include(b=>b.Guest).ToListAsync());
         }
 
         [Authorize("IsReceptionist")]
@@ -131,9 +131,10 @@ namespace HotelWepApp2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("GuestId,Date")] ReceptionistViewModel receptionistViewModel)
         {
+            
             if (ModelState.IsValid)
             {
-                var guest = _context.Guests.SingleOrDefault(g => g.GuestId == receptionistViewModel.GuestId);
+                var guest = _context.Guests.Include(g => g.Room).SingleOrDefault(g => g.GuestId == receptionistViewModel.GuestId);
                 var buffet = _context.Buffets.SingleOrDefault(b => b.Date == receptionistViewModel.Date);
                 if (guest == null)
                 {
@@ -142,12 +143,19 @@ namespace HotelWepApp2.Controllers
 
                 if (buffet == null)
                 {
-                    Buffet newBuffet = new Buffet();
-                    newBuffet.Date = receptionistViewModel.Date;
+                    Buffet newBuffet = new Buffet()
+                    {
+                        Date = receptionistViewModel.Date,
+                        Guest = new List<Guest>()
+                    };
                     newBuffet.Guest.Add(guest);
+                    _context.Buffets.Add(newBuffet);
+                    
+                    
                 }
                 else
                 {
+                    buffet.Guest = new List<Guest>();
                     buffet.Guest.Add(guest);
                 }
 

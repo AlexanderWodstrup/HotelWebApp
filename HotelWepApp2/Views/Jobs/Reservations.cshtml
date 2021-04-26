@@ -1,9 +1,8 @@
-﻿@using System.Linq
-@model IEnumerable<HotelWepApp2.Models.Buffet>
+﻿@model IEnumerable<HotelWepApp2.Models.Buffet>
 
 
 @{
-    ViewData["Title"] = "Reservationlist";
+    ViewData["Title"] = "Index";
 }
 
 <h2>Total of reservations</h2>
@@ -11,18 +10,22 @@
 <table class="table">
     <thead>
     <tr>
+        <th>@Html.DisplayNameFor(model => model.Date)</th>
         <th>Expected guests:</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
+
         @foreach (var item in Model)
         {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Date)</td>
             <td>
                 @Html.DisplayFor(modelItem => item.Guest.Count)
             </td>
+        </tr>
         }
-    </tr>
+    
     </tbody>
 </table>
 
