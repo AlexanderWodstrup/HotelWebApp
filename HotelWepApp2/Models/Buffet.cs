@@ -11,6 +11,6 @@ namespace HotelWepApp2.Models
 
         public string GuestType { get; set; }
         public List<Guest> Guest { get; set; }
-
+        //public int GuestCounter { get; set; }
     }
 }
