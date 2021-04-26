@@ -1,1 +1,35 @@
-﻿
+﻿@using System.Linq
+@model IEnumerable<HotelWepApp2.Models.Guest>
+
+
+@{
+    ViewData["Title"] = "Overview List";
+}
+
+<h2>"Overview List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Room number:</th>
+            <th>Adults checked in:</th>
+            <th>Children checked in:</th>
+        </tr>
+    </thead>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room.RoomId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuffetCheckIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.)
+            </td>
+        </tr>
+    }
+</tbody>
+</table>
