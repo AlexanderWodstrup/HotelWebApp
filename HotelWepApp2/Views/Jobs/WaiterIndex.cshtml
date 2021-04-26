@@ -1,0 +1,55 @@
+﻿@model IEnumerable<HotelWepApp2.Models.Guest>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Welcome Waiter</h1>
+
+<p>Please select the guest you want to check in</p>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GuestId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Room)
+        </th>
+        <th>
+            Checked in status:
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GuestId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room.RoomId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuffetCheckIn)
+            </td>
+            <td>
+                <a asp-action="GuestCheckIn" asp-route-id="@item.GuestId">Check In</a> |
+                <a asp-action="GuestCheckOut" asp-route-id="@item.GuestId">Check Out</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@*<div>
+    <a asp-action="GuestCheckIn" asp-route-id="@Model.GuestId">Edit</a>
+</div>*@

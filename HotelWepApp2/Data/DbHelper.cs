@@ -123,17 +123,20 @@ namespace HotelWepApp2.Data
                     if (guest.GuestId == 2)
                     {
                         tmp.Add(guest);
+                        guest.BuffetCheckIn = false;
                     }
 
                     if (guest.GuestId == 3)
                     {
                         tmp.Add(guest);
+                        guest.BuffetCheckIn = true;
                     }
                 }
 
                 var buffet = new Buffet()
                 {
-                    Guest = tmp
+                    Guest = tmp,
+                    Date = DateTime.Today
                 };
                 db.Buffets.Add(buffet);
                 db.SaveChanges();

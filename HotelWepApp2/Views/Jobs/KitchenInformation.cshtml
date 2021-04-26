@@ -1,1 +1,54 @@
-﻿
+﻿@model HotelWepApp2.ViewModel.ChefViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Date (ignore time stamp):
+        </th>
+        <th>
+            Expected people:
+        </th>
+        <th>
+            Expected Adults:
+        </th>
+        <th>
+            Expected Kids:
+        </th>
+        <th>
+            Check in's:
+        </th>
+        <th>
+            Not yet checked in: 
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Date)*@
+            </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Guest.Count)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.AdultCheckIn)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Guest.Where(g => g.Type == "Kid").Count(g => g.BuffetCheckIn == true))*@
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem =>item.Guest.Where(g => g.BuffetCheckIn == true).Count())*@
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Guest.Where(g => g.BuffetCheckIn == false).Count())*@
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>

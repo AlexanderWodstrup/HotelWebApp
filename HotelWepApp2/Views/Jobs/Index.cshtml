@@ -8,9 +8,10 @@
 
 @if (User.HasClaim("Waiter", "IsWaiter"))
 {
-<h1>Welcome Waiter</h1>
 
-    <p>Please select Guest check-in in the nav bar</p>
+    <p>Redirecting to Waiter page</p>
+    <meta http-equiv="refresh" content="0; URL=https://localhost:44346/Jobs/WaiterIndex" />
+    
 }
 
 else if (User.HasClaim("Receptionist", "IsReceptionist"))
@@ -22,7 +23,7 @@ else if (User.HasClaim("Receptionist", "IsReceptionist"))
 
 else if (User.HasClaim("Chef", "IsChef"))
 {
-<h1>Welcome Waiter</h1>
+    <h1>Welcome Waiter</h1>
 
     <p>Please select Kitchen information in the nav bar</p>
 }
