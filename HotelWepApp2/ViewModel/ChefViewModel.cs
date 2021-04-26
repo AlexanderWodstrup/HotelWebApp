@@ -7,6 +7,13 @@ namespace HotelWepApp2.ViewModel
 {
     public class ChefViewModel
     {
-        public int AdultCheckIn { get; set; }
+        public DateTime Date { get; set; }
+        public int GuestCount { get; set; }
+        public int AdultCount { get; set; }
+        public int KidCount { get; set; }
+        public int AdultCheckInCount { get; set; }
+        public int KidCheckInCount { get; set; }
+        public int CheckInCount { get; set; }
+        public int NotCheckInCount { get; set; }
     }
 }

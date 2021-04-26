@@ -36,7 +36,7 @@ namespace HotelWepApp2.Controllers
         [Authorize("IsReceptionist")]
         public async Task<IActionResult> Rooms()
         {
-            return View(await _context.Jobs.ToListAsync());
+            return View(await _context.Guests.Include(g => g.Room).ToListAsync());
         }
 
         [Authorize("IsWaiter")]
@@ -84,19 +84,48 @@ namespace HotelWepApp2.Controllers
         public ActionResult KitchenInformation()
         {
             var applicationDbContext = _context.Buffets.Include(b => b.Guest);
-            var model = new ChefViewModel();
+            
+            List<ChefViewModel> modelList = new List<ChefViewModel>();
+            
+            
             foreach (var buffet in applicationDbContext)
             {
+                ChefViewModel model = new ChefViewModel();
+                model.Date = buffet.Date;
+                model.GuestCount = buffet.Guest.Count;
                 foreach (var guest in buffet.Guest)
                 {
+                    if (guest.Type == "Adult")
+                    {
+                        model.AdultCount++;
+                    }
+                    if (guest.Type == "Kid")
+                    {
+                        model.KidCount++;
+                    }
                     if (guest.Type == "Adult" && guest.BuffetCheckIn == true)
                     {
-                        model.AdultCheckIn++;
+                        model.AdultCheckInCount++;
                     }
+                    if (guest.Type == "Kid" && guest.BuffetCheckIn == true)
+                    {
+                        model.KidCheckInCount++;
+                    }
+
+                    if (guest.BuffetCheckIn == true)
+                    {
+                        model.CheckInCount++;
+                    }
+                    else if (guest.BuffetCheckIn == false)
+                    {
+                        model.NotCheckInCount++;
+                    }
+                    
                 }
+                modelList.Add(model);
             }
             
-            return View(model);
+            return View(modelList);
         }
 
 

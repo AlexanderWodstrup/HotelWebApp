@@ -1,4 +1,4 @@
-﻿@model HotelWepApp2.ViewModel.ChefViewModel
+﻿@model IEnumerable<HotelWepApp2.ViewModel.ChefViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,49 +6,62 @@
 
 <table class="table">
     <thead>
-    <tr>
-        <th>
-            Date (ignore time stamp):
-        </th>
-        <th>
-            Expected people:
-        </th>
-        <th>
-            Expected Adults:
-        </th>
-        <th>
-            Expected Kids:
-        </th>
-        <th>
-            Check in's:
-        </th>
-        <th>
-            Not yet checked in: 
-        </th>
-    </tr>
+        <tr>
+            <th>
+                Date (ignore time stamp):
+            </th>
+            <th>
+                Expected people:
+            </th>
+            <th>
+                Expected Adults:
+            </th>
+            <th>
+                Expected Kids:
+            </th>
+            <th>
+                Adults checked in:
+            </th>
+            <th>
+                Kids checked in:
+            </th>
+            <th>
+                Check in's:
+            </th>
+            <th>
+                Not yet checked in:
+            </th>
+        </tr>
     </thead>
     <tbody>
+    @foreach (var model in Model)
+    {
         <tr>
-            
             <td>
-                @*@Html.DisplayFor(modelItem => item.Date)*@
+                @Html.DisplayFor(modelItem => model.Date)
             </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.Guest.Count)*@
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Model.AdultCheckIn)
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.Guest.Where(g => g.Type == "Kid").Count(g => g.BuffetCheckIn == true))*@
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem =>item.Guest.Where(g => g.BuffetCheckIn == true).Count())*@
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.Guest.Where(g => g.BuffetCheckIn == false).Count())*@
-                </td>
-            }
+            <td>
+                @Html.DisplayFor(modelItem => model.GuestCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => model.AdultCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => model.KidCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => model.AdultCheckInCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => model.KidCheckInCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => model.CheckInCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => model.NotCheckInCount)
+            </td>
         </tr>
+    }
     </tbody>
 </table>
