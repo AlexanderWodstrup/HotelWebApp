@@ -36,7 +36,7 @@ namespace HotelWepApp2.Controllers
         [Authorize("IsReceptionist")]
         public async Task<IActionResult> Rooms()
         {
-            return View(await _context.Jobs.ToListAsync());
+            return View(await _context.Guests.Include(g=>g.Room).ToListAsync());
         }
 
         [Authorize("IsWaiter")]
