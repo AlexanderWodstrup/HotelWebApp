@@ -21,19 +21,7 @@ namespace HotelWepApp2.Controllers
         }
 
         // GET: Jobs
-        [Authorize("IsReceptionist")]
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Jobs.ToListAsync());
-        }
-
-        [Authorize("IsWaiter")]
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Jobs.ToListAsync());
-        }
-
-        [Authorize("IsChef")]
+        [Authorize(Roles = "IsReceptionist, IsWaiter, IsChef")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Jobs.ToListAsync());
