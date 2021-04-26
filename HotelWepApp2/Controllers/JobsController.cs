@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HotelWepApp2.Data;
 using HotelWepApp2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelWepApp2.Controllers
 {
@@ -20,6 +21,7 @@ namespace HotelWepApp2.Controllers
         }
 
         // GET: Jobs
+        [Authorize("IsReceptionist")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Jobs.ToListAsync());

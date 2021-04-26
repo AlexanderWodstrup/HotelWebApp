@@ -22,12 +22,14 @@ namespace HotelWepApp2.Data
         {
             const string WaiterEmail = "Waiter@localhost";
             const string WaiterPassword = "Waiter2/";
+            const bool EmailConfirmed = true;
             if (userManager.FindByNameAsync(WaiterEmail).Result == null)
             {
                 var waiter = new IdentityUser
                 {
                     UserName = WaiterEmail,
-                    Email = WaiterEmail
+                    Email = WaiterEmail,
+                    EmailConfirmed = EmailConfirmed
                 };
                 IdentityResult result = userManager.CreateAsync(waiter, WaiterPassword).Result;
                 if (result.Succeeded)
@@ -44,7 +46,8 @@ namespace HotelWepApp2.Data
                 var chef = new IdentityUser
                 {
                     UserName = ChefEmail,
-                    Email = ChefEmail
+                    Email = ChefEmail,
+                    EmailConfirmed = EmailConfirmed
                 };
                 IdentityResult result = userManager.CreateAsync(chef, ChefPassword).Result;
                 if (result.Succeeded)
@@ -62,7 +65,8 @@ namespace HotelWepApp2.Data
                 var receptionist = new IdentityUser
                 {
                     UserName = ReceptionistEmail,
-                    Email = ReceptionistEmail
+                    Email = ReceptionistEmail,
+                    EmailConfirmed = EmailConfirmed
                 };
                 IdentityResult result = userManager.CreateAsync(receptionist, ReceptionistPassword).Result;
                 if (result.Succeeded)
