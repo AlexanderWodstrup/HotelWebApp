@@ -1,12 +1,32 @@
-﻿@model IEnumerable<HotelWepApp2.Models.Job>
+﻿@using System.Security.Claims
+@model IEnumerable<HotelWepApp2.Models.Job>
 
 @{
     ViewData["Title"] = "Index";
 }
 
 
-<h1>Welcomer (Userclam)</h1>
+@if (User.HasClaim("Waiter", "IsWaiter"))
+{
+<h1>Welcome Waiter</h1>
 
-<p>Please select Reservations or Rooms in the nav bar</p>
+    <p>Please select Guest check-in in the nav bar</p>
+}
+
+else if (User.HasClaim("Receptionist", "IsReceptionist"))
+{
+    <h1>Welcome Receptionist</h1>
+
+    <p>Please select Reservations or Rooms in the nav bar</p>
+}
+
+else if (User.HasClaim("Chef", "IsChef"))
+{
+<h1>Welcome Waiter</h1>
+
+    <p>Please select Kitchen information in the nav bar</p>
+}
+
+
 
 

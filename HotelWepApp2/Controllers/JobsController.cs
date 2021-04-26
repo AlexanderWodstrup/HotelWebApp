@@ -29,8 +29,7 @@ namespace HotelWepApp2.Controllers
         [Authorize("IsReceptionist")]
         public async Task<IActionResult> Reservations()
         {
-            var reservations = _context.Buffets.Where(b => b.BuffetId == 1);
-            return View(await _context.Jobs.ToListAsync());
+            return View(await _context.Buffets.Where(b => b.BuffetId == 1).ToListAsync());
         }
 
         [Authorize("IsReceptionist")]
@@ -40,7 +39,7 @@ namespace HotelWepApp2.Controllers
         }
 
         [Authorize("IsWaiter")]
-        public async Task<IActionResult> ReceptionistView()
+        public async Task<IActionResult> GuestCheckIn()
         {
             return View(await _context.Jobs.ToListAsync());
         }
