@@ -29,6 +29,7 @@ namespace HotelWepApp2.Controllers
         [Authorize("IsReceptionist")]
         public async Task<IActionResult> Reservations()
         {
+            var reservations = _context.Buffets.Where(b => b.BuffetId == 1);
             return View(await _context.Jobs.ToListAsync());
         }
 
