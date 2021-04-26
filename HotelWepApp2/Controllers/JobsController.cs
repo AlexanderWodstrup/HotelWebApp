@@ -129,15 +129,32 @@ namespace HotelWepApp2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("JobId,Name,Email")] Job job)
+        public async Task<IActionResult> Create([Bind("GuestId,Date")] ReceptionistViewModel receptionistViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(job);
+                var guest = _context.Guests.SingleOrDefault(g => g.GuestId == receptionistViewModel.GuestId);
+                var buffet = _context.Buffets.SingleOrDefault(b => b.Date == receptionistViewModel.Date);
+                if (guest == null)
+                {
+                    return NotFound();
+                }
+
+                if (buffet == null)
+                {
+                    Buffet newBuffet = new Buffet();
+                    newBuffet.Date = receptionistViewModel.Date;
+                    newBuffet.Guest.Add(guest);
+                }
+                else
+                {
+                    buffet.Guest.Add(guest);
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(job);
+            return View("~/Views/Jobs/Reservations.cshtml");
         }
 
         // GET: Jobs/Edit/5
