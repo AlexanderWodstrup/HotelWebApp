@@ -34,7 +34,7 @@ namespace HotelWepApp2.Data
                 IdentityResult result = userManager.CreateAsync(waiter, WaiterPassword).Result;
                 if (result.Succeeded)
                 {
-                    var waiterClaim = new Claim("Waiter", "isWaiter");
+                    var waiterClaim = new Claim("Waiter", "IsWaiter");
                     userManager.AddClaimAsync(waiter, waiterClaim).Wait();
                 }
             }
@@ -52,7 +52,7 @@ namespace HotelWepApp2.Data
                 IdentityResult result = userManager.CreateAsync(chef, ChefPassword).Result;
                 if (result.Succeeded)
                 {
-                    var chefClaim = new Claim("Chef", "isChef");
+                    var chefClaim = new Claim("Chef", "IsChef");
                     userManager.AddClaimAsync(chef, chefClaim).Wait();
                 }
             }

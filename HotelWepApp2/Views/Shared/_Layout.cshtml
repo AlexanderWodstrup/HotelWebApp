@@ -21,27 +21,29 @@
                     <ul>
                         @if (User.HasClaim("Waiter", "IsWaiter"))
                         {
-                            <li class="nav-item">
+                            <ul class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Guest check-in</a>
-                            </li>
+                            </ul>
                         }
 
                         else if(User.HasClaim("Receptionist", "IsReceptionist"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Reservations</a>
-                            </li>
+                            <th>
+                                <ul class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Reservations</a>
+                                </ul>
+                            </th>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Rooms</a>
-                            </li>
+                                <ul class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Rooms</a>
+                                </ul>
                         }
 
                         else if(User.HasClaim("Chef", "IsChef"))
                         {
-                            <li class="nav-item">
+                            <ul class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Kitchen information</a>
-                            </li>
+                            </ul>
                         }
                     </ul>
                     <partial name="_LoginPartial" />
