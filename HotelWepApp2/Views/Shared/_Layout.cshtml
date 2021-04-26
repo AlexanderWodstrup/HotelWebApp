@@ -22,7 +22,7 @@
                         @if (User.HasClaim("Waiter", "IsWaiter"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Guest check-in</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Jobs" asp-action="GuestCheckIn">Guest check-in</a>
                             </li>
                         }
 
@@ -40,7 +40,7 @@
                         else if(User.HasClaim("Chef", "IsChef"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Kitchen information</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Jobs" asp-action="KitchenInformation">Kitchen information</a>
                             </li>
                         }
                     </ul>
