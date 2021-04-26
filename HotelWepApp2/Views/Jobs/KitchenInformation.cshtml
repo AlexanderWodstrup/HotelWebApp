@@ -6,32 +6,33 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                Date (ignore time stamp):
-            </th>
-            <th>
-                Expected people:
-            </th>
-            <th>
-                Expected Adults:
-            </th>
-            <th>
-                Expected Kids:
-            </th>
-            <th>
-                Adults checked in:
-            </th>
-            <th>
-                Kids checked in:
-            </th>
-            <th>
-                Check in's:
-            </th>
-            <th>
-                Not yet checked in:
-            </th>
-        </tr>
+    <tr>
+        <th>
+            Date (ignore time stamp):
+        </th>
+        <th>
+            Expected people:
+        </th>
+        <th>
+            Expected Adults:
+        </th>
+        <th>
+            Expected Kids:
+        </th>
+        <th>
+            Adults checked in:
+        </th>
+        <th>
+            Kids checked in:
+        </th>
+        <th>
+            Check in's:
+        </th>
+        <th>
+            Not yet checked in:
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
     @foreach (var model in Model)
@@ -61,7 +62,10 @@
             <td>
                 @Html.DisplayFor(modelItem => model.NotCheckInCount)
             </td>
+            
         </tr>
     }
     </tbody>
 </table>
+
+<a asp-action="KitchenInformation" type="Button" style="width: 500px">Update Page</a>

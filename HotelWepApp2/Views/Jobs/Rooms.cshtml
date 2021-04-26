@@ -1,12 +1,12 @@
 ﻿@using System.Linq
-@model IEnumerable<HotelWepApp2.Models.Guest>
+@model IEnumerable<HotelWepApp2.ViewModel.RoomViewModel>
 
 
 @{
     ViewData["Title"] = "Overview List";
 }
 
-<h2>"Overview List</h2>
+<h2>Overview List</h2>
 
 <table class="table">
     <thead>
@@ -21,13 +21,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Room.RoomId)
+                @Html.DisplayFor(modelItem => item.RoomId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BuffetCheckIn)
+                @Html.DisplayFor(modelItem => item.AdultBuffetCheckInCounter)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.)
+                @Html.DisplayFor(modelItem => item.KidBuffetCheckInCounter)
             </td>
         </tr>
     }

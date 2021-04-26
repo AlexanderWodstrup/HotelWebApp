@@ -34,9 +34,31 @@ namespace HotelWepApp2.Controllers
         }
 
         [Authorize("IsReceptionist")]
-        public async Task<IActionResult> Rooms()
+        public ActionResult Rooms()
         {
-            return View(await _context.Guests.Include(g=>g.Room).ToListAsync());
+            var Guests = _context.Guests.Include(g => g.Room);
+            var Rooms = _context.Rooms.Include(g => g.Guests);
+            List<RoomViewModel> modelList = new List<RoomViewModel>();
+            foreach (var room in Rooms)
+            {
+                RoomViewModel model = new RoomViewModel();
+                model.RoomId = room.RoomId;
+                foreach (var guest in room.Guests)
+                {
+                    if (guest.Type == "Adult" && guest.BuffetCheckIn == true)
+                    {
+                        model.AdultBuffetCheckInCounter++;
+                    }
+
+                    if (guest.Type == "Kid" && guest.BuffetCheckIn == true)
+                    {
+                        model.KidBuffetCheckInCounter++;
+                    }
+                }
+                modelList.Add(model);
+            }
+            
+            return View(modelList);
         }
 
         [Authorize("IsWaiter")]
@@ -63,7 +85,7 @@ namespace HotelWepApp2.Controllers
         }
 
         [Authorize("IsWaiter")]
-        public async Task<IActionResult> GuestCheckOut(long? id)
+        public ActionResult GuestCheckOut(long? id)
         {
             var guest = _context.Guests.FirstOrDefault(g => g.GuestId == id);
             var buffet = _context.Buffets.FirstOrDefault(b => b.Date == DateTime.Today);
