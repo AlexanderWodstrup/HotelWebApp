@@ -27,6 +27,18 @@ namespace HotelWepApp2.Controllers
             return View(await _context.Jobs.ToListAsync());
         }
 
+        [Authorize("IsWaiter")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Jobs.ToListAsync());
+        }
+
+        [Authorize("IsChef")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Jobs.ToListAsync());
+        }
+
         // GET: Jobs/Details/5
         public async Task<IActionResult> Details(long? id)
         {
