@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HotelWepApp2.Data;
 using HotelWepApp2.Models;
+using HotelWepApp2.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 
 namespace HotelWepApp2.Controllers
@@ -39,15 +40,63 @@ namespace HotelWepApp2.Controllers
         }
 
         [Authorize("IsWaiter")]
-        public async Task<IActionResult> GuestCheckIn()
+        public async Task<IActionResult> WaiterIndex()
         {
-            return View(await _context.Jobs.ToListAsync());
+            return View(await _context.Guests.Include(g => g.Room).ToListAsync());
+        }
+
+        [Authorize("IsWaiter")]
+        public async Task<IActionResult> GuestCheckIn(long? id)
+        {
+            var guest = _context.Guests.FirstOrDefault(g => g.GuestId == id);
+            var buffet = _context.Buffets.FirstOrDefault(b => b.Date == DateTime.Today);
+            if (guest == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                guest.BuffetCheckIn = true;
+            }
+            
+            return View(await _context.SaveChangesAsync());
+        }
+
+        [Authorize("IsWaiter")]
+        public async Task<IActionResult> GuestCheckOut(long? id)
+        {
+            var guest = _context.Guests.FirstOrDefault(g => g.GuestId == id);
+            var buffet = _context.Buffets.FirstOrDefault(b => b.Date == DateTime.Today);
+            if (guest == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                guest.BuffetCheckIn = false;
+            }
+
+            _context.SaveChanges();
+            return View("~/Views/Jobs/GuestCheckIn.cshtml");
         }
 
         [Authorize("IsChef")]
-        public async Task<IActionResult> KitchenInformation()
+        public ActionResult KitchenInformation()
         {
-            return View(await _context.Jobs.ToListAsync());
+            var applicationDbContext = _context.Buffets.Include(b => b.Guest);
+            var model = new ChefViewModel();
+            foreach (var buffet in applicationDbContext)
+            {
+                foreach (var guest in buffet.Guest)
+                {
+                    if (guest.Type == "Adult" && guest.BuffetCheckIn == true)
+                    {
+                        model.AdultCheckIn++;
+                    }
+                }
+            }
+            
+            return View(model);
         }
 
 
