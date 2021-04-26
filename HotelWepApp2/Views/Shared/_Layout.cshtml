@@ -18,32 +18,30 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul>
+                    <ul class="navbar-nav flex-grow-1">
                         @if (User.HasClaim("Waiter", "IsWaiter"))
                         {
-                            <ul class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Guest check-in</a>
-                            </ul>
+                            </li>
                         }
 
                         else if(User.HasClaim("Receptionist", "IsReceptionist"))
                         {
-                            <th>
-                                <ul class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Reservations</a>
-                                </ul>
-                            </th>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Reservations</a>
+                                </li>
 
-                                <ul class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Rooms</a>
-                                </ul>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Rooms</a>
+                                </li>
                         }
 
                         else if(User.HasClaim("Chef", "IsChef"))
                         {
-                            <ul class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Kitchen information</a>
-                            </ul>
+                            </li>
                         }
                     </ul>
                     <partial name="_LoginPartial" />
