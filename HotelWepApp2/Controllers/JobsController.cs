@@ -107,12 +107,11 @@ namespace HotelWepApp2.Controllers
         {
             var applicationDbContext = _context.Buffets.Include(b => b.Guest);
             
-            List<ChefViewModel> modelList = new List<ChefViewModel>();
+            ChefViewModel model = new ChefViewModel();
             
             
             foreach (var buffet in applicationDbContext)
             {
-                ChefViewModel model = new ChefViewModel();
                 model.Date = buffet.Date;
                 model.GuestCount = buffet.Guest.Count;
                 foreach (var guest in buffet.Guest)
@@ -144,30 +143,11 @@ namespace HotelWepApp2.Controllers
                     }
                     
                 }
-                modelList.Add(model);
             }
             
-            return View(modelList);
+            return View(model);
         }
 
-
-        // GET: Jobs/Details/5
-        public async Task<IActionResult> Details(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var job = await _context.Jobs
-                .FirstOrDefaultAsync(m => m.JobId == id);
-            if (job == null)
-            {
-                return NotFound();
-            }
-
-            return View(job);
-        }
 
         // GET: Jobs/Create
         public IActionResult Create()
@@ -216,85 +196,7 @@ namespace HotelWepApp2.Controllers
             return View("~/Views/Jobs/Reservations.cshtml");
         }
 
-        // GET: Jobs/Edit/5
-        public async Task<IActionResult> Edit(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var job = await _context.Jobs.FindAsync(id);
-            if (job == null)
-            {
-                return NotFound();
-            }
-            return View(job);
-        }
-
-        // POST: Jobs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("JobId,Name,Email")] Job job)
-        {
-            if (id != job.JobId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(job);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!JobExists(job.JobId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(job);
-        }
-
-        // GET: Jobs/Delete/5
-        public async Task<IActionResult> Delete(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var job = await _context.Jobs
-                .FirstOrDefaultAsync(m => m.JobId == id);
-            if (job == null)
-            {
-                return NotFound();
-            }
-
-            return View(job);
-        }
-
-        // POST: Jobs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
-        {
-            var job = await _context.Jobs.FindAsync(id);
-            _context.Jobs.Remove(job);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool JobExists(long id)
         {

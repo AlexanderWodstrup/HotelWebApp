@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HotelWepApp2.ViewModel.ChefViewModel>
+﻿@model HotelWepApp2.ViewModel.ChefViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -35,37 +35,40 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var model in Model)
-    {
+    
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => model.Date)
+                @Html.DisplayFor(modelItem => Model.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => model.GuestCount)
+                @Html.DisplayFor(modelItem => Model.GuestCount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => model.AdultCount)
+                @Html.DisplayFor(modelItem => Model.AdultCount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => model.KidCount)
+                @Html.DisplayFor(modelItem => Model.KidCount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => model.AdultCheckInCount)
+                @Html.DisplayFor(modelItem => Model.AdultCheckInCount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => model.KidCheckInCount)
+                @Html.DisplayFor(modelItem => Model.KidCheckInCount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => model.CheckInCount)
+                @Html.DisplayFor(modelItem => Model.CheckInCount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => model.NotCheckInCount)
+                @Html.DisplayFor(modelItem => Model.NotCheckInCount)
             </td>
             
         </tr>
-    }
+    
     </tbody>
 </table>
 
-<a asp-action="KitchenInformation" type="Button" style="width: 500px">Update Page</a>
+<div>
+    <form asp-action="KitchenInformation">
+        <input type="submit" style="display: block;width: 100%;border: none;background-color: lightblue;color: black;padding: 14px 28px;font-size: 16px;cursor: pointer;text-align: center;" value="Update Page" />
+    </form>
+</div>
